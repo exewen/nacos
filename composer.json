@@ -1,0 +1,26 @@
+{
+    "name": "exewen/nacos",
+    "description": "nacos配置中心php客户端",
+    "type": "library",
+    "require": {
+        "php": ">=7.0",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "php": ">=7.4",
+        "ext-json": "*"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "exewen\\": "src/",
+        }
+    },
+    "authors": [
+        {
+            "name": "exewen",
+            "email": "exeweb@live.com"
+        }
+    ],
+    "minimum-stability": "stable"
+}
