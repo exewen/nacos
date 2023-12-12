@@ -1,10 +1,10 @@
 <?php
 
-namespace exewen;
+namespace Exewen\Nacos;
 
 class Client
 {
-    public function test()
+    public function test(): int
     {
         return 11;
     }

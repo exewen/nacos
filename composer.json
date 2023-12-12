@@ -13,7 +13,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "exewen\\": "src/"
+            "Exewen\\Nacos\\": "src/Nacos"
         }
     },
     "authors": [
@@ -22,5 +22,5 @@
             "email": "exeweb@live.com"
         }
     ],
-    "minimum-stability": "dev"
+    "minimum-stability": "stable"
 }
