@@ -12,7 +12,7 @@ class BaseTest extends TestCase
     {
         parent::__construct();
 
-        FileUtil::setSnapshotPath(dirname(__DIR__) . "/nacos/config");
+        FileUtil::setSnapshotPath(dirname(__DIR__) . "/config/nacos/env");
     }
 
 }

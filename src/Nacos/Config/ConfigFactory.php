@@ -12,7 +12,7 @@ class ConfigFactory
     public function __invoke(): ConfigInterface
     {
         $configFile = $this->readPath([BASE_NACOS_PATH . '/Nacos/Config/Publish']);
-        $autoloadConfig = $this->readPath([BASE_NACOS_PATH . '/../config/nacos']);
+        $autoloadConfig = $this->readPath([BASE_NACOS_PATH . '/../../../../config/nacos/config']);
         $config = array_replace_recursive($configFile, $autoloadConfig);
         return new Config($config);
     }
@@ -32,15 +32,28 @@ class ConfigFactory
 
     protected function readPath(array $dirs): array
     {
+        $dirs = $this->filterEmptyPath($dirs);
         $config = [];
-        $finder = new Finder();
-        $finder->files()->in($dirs)->name('*.php');
-        foreach ($finder as $fileInfo) {
-            $key = $fileInfo->getBasename('.php');
-            $value = require $fileInfo->getRealPath();
-            $config[$key] = $value;
+        if (!empty($dirs)) {
+            $finder = new Finder();
+            $finder->files()->in($dirs)->name('*.php');
+            foreach ($finder as $fileInfo) {
+                $key = $fileInfo->getBasename('.php');
+                $value = require $fileInfo->getRealPath();
+                $config[$key] = $value;
+            }
         }
         return $config;
+    }
+
+    private function filterEmptyPath(array $dirs): array
+    {
+        foreach ($dirs as $k => $path) {
+            if (!is_dir($path)) {
+                unset($dirs[$k]);
+            }
+        }
+        return $dirs;
     }
 
 
