@@ -1,1 +1,7 @@
 /vendor/
+/nacos/
+/config/
+/logs/
+.idea/
+/composer.lock
+.phpunit.result.cache
