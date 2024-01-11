@@ -1,0 +1,50 @@
+{
+    "name": "exewen/nacos",
+    "description": "A nacos component for Exewen.",
+    "authors": [
+        {
+            "name": "exewen",
+            "email": "exeweb@163.com"
+        }
+    ],
+    "license": "MIT",
+    "type": "library",
+    "keywords": [
+        "php",
+        "exewen",
+        "nacos"
+    ],
+    "require": {
+        "php": ">=7.4",
+        "exewen/di": "*",
+        "exewen/http": "*",
+        "exewen/logger": "*",
+        "exewen/utils": "*",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.7 | ^6.5 | ^7.5 | ^8.4 | ^9.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Exewen\\Nacos\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ExewenTest\\Nacos\\": "tests/"
+        }
+    },
+    "minimum-stability": "dev",
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        },
+        "exewen": {
+            "config": "Exewen\\Nacos\\ConfigRegister"
+        }
+    }
+}
