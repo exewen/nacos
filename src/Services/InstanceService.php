@@ -17,10 +17,17 @@ class InstanceService
     public function __construct(HttpClientInterface $httpClient, ConfigInterface $config)
     {
         $this->httpClient = $httpClient;
-        $this->driver = $config->get('nacos.channels');
+        $this->driver = $config->get('nacos.http_channel');
     }
 
-
+    /**
+     * 获取实例列表
+     * @param string $namespaceId
+     * @param string $serviceName
+     * @param string $group
+     * @param bool $healthyOnly
+     * @return mixed
+     */
     public function getInstance(string $namespaceId, string $serviceName, string $group, bool $healthyOnly)
     {
         $result = $this->httpClient->get($this->driver, $this->nacosInstanceListUrl, [
@@ -32,6 +39,16 @@ class InstanceService
         return json_decode($result, true);
     }
 
+    /**
+     * 注册服务实例
+     * @param string $namespaceId
+     * @param string $serviceName
+     * @param string $group
+     * @param string $ip
+     * @param int $port
+     * @param string $ver
+     * @return bool
+     */
     public function setInstance(string $namespaceId, string $serviceName, string $group, string $ip, int $port, string $ver): bool
     {
         $result = $this->httpClient->post($this->driver, $this->nacosInstanceUrl, [
@@ -47,6 +64,16 @@ class InstanceService
         return $result == "ok";
     }
 
+    /**
+     * 发送服务心跳
+     * @param string $namespaceId
+     * @param string $serviceName
+     * @param string $group
+     * @param string $ip
+     * @param int $port
+     * @param string $ver
+     * @return bool
+     */
     public function setInstanceBeat(string $namespaceId, string $serviceName, string $group, string $ip, int $port, string $ver): bool
     {
         $cluster = 'DEFAULT';

@@ -16,7 +16,8 @@ class ConfigRegister
             ],
 
             'nacos' => [
-                'channels' => 'nacos'
+                // 选择http模块驱动
+                'http_channel' => 'nacos'
             ]
 
 

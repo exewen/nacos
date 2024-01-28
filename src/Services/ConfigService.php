@@ -3,7 +3,6 @@
 namespace Exewen\Nacos\Services;
 
 use Exewen\Config\Contract\ConfigInterface;
-use Exewen\Di\Container;
 use Exewen\Http\Contract\HttpClientInterface;
 use Exewen\Nacos\Exception\HttpDataException;
 use Exewen\Utils\FileUtil;
@@ -17,9 +16,16 @@ class ConfigService
     public function __construct(HttpClientInterface $httpClient, ConfigInterface $config)
     {
         $this->httpClient = $httpClient;
-        $this->driver = $config->get('nacos.channels');
+        $this->driver = $config->get('nacos.http_channel');
     }
 
+    /**
+     * 获取nacos配置
+     * @param string $namespaceId
+     * @param string $dataId
+     * @param string $group
+     * @return string
+     */
     public function getConfig(string $namespaceId, string $dataId, string $group): string
     {
         return $this->httpClient->get($this->driver, $this->nacosConfigUrl, [
@@ -29,6 +35,13 @@ class ConfigService
         ]);
     }
 
+    /**
+     * 保存本地nacos配置
+     * @param string $namespaceId
+     * @param string $dataId
+     * @param string $group
+     * @return string
+     */
     public function saveConfig(string $namespaceId, string $dataId, string $group): string
     {
         $dataIdConfig = $this->getConfig($namespaceId, $dataId, $group);

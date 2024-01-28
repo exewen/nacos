@@ -9,6 +9,10 @@ use Exewen\Nacos\Contract\NacosInterface;
 class NacosProvider extends ServiceProvider
 {
 
+    /**
+     * 服务注册
+     * @return void
+     */
     public function register()
     {
         $this->container->singleton(NacosInterface::class);
