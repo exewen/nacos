@@ -9,16 +9,17 @@ cp -rf ./publish/exewen /your_project/config
 ## 初始化
 ```php
 !defined('BASE_PATH_PKG') && define('BASE_PATH_PKG', dirname(__DIR__, 1));
-# 设置配置保存路径
+# 设置配置保存/读取路径
 \Exewen\Utils\FileUtil::setSnapshotPath(dirname(__DIR__) . "/config/nacos/env");
-
-$app = new Container();
-// 服务注册
-$app->setProviders([LoggerProvider::class,HttpProvider::class,NacosProvider::class]);
-$this->app = $app;
 ``` 
 ## nacos
 ```php
+# 初始化DI
+$app = new Container();
+# 服务注册
+$app->setProviders([LoggerProvider::class,HttpProvider::class,NacosProvider::class]);
+$this->app = $app;
+
 # 获取配置文件
 /** @var NacosInterface $nacos */
 $nacos = $this->app->get(NacosInterface::class);
@@ -56,10 +57,6 @@ $result = $nacos->getInstance($this->namespaceId, $this->serviceName, $this->gro
 composer require exewen/facades
 ```
 ```php
-!defined('BASE_PATH_PKG') && define('BASE_PATH_PKG', dirname(__DIR__, 1));
-# 设置配置保存路径
-\Exewen\Utils\FileUtil::setSnapshotPath(dirname(__DIR__) . "/config/nacos/env");
-
 # 获取配置文件
 NacosFacade::getConfig($this->namespaceId, $this->dataId, $this->group);
 
