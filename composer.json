@@ -16,10 +16,7 @@
     ],
     "require": {
         "php": ">=7.4",
-        "exewen/di": "^0.1",
-        "exewen/http": "^0.1",
-        "exewen/logger": "^0.1",
-        "exewen/utils": "^0.1",
+        "exewen/http": "dev-develop",
         "ext-json": "*"
     },
     "require-dev": {
