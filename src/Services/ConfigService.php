@@ -9,9 +9,10 @@ use Exewen\Utils\FileUtil;
 
 class ConfigService
 {
-    private HttpClientInterface $httpClient;
-    private string $driver;
-    private string $nacosConfigUrl = '/nacos/v1/cs/configs';
+//    private HttpClientInterface $httpClient;
+    private $httpClient;
+    private $driver;
+    private $nacosConfigUrl = '/nacos/v1/cs/configs';
 
     public function __construct(HttpClientInterface $httpClient, ConfigInterface $config)
     {

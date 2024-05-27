@@ -15,7 +15,7 @@
         "nacos"
     ],
     "require": {
-        "php": ">=7.4",
+        "php": ">=7.3",
         "exewen/http": "dev-develop",
         "ext-json": "*"
     },
@@ -32,7 +32,7 @@
             "ExewenTest\\Nacos\\": "tests/"
         }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "config": {
         "sort-packages": true
     },

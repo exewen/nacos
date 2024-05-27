@@ -12,8 +12,10 @@ use Exewen\Nacos\Services\InstanceService;
 class Nacos implements NacosInterface
 {
 
-    private ConfigService $configService;
-    private InstanceService $instanceService;
+//    private ConfigService $configService;
+    private $configService;
+//    private InstanceService $instanceService;
+    private $instanceService;
 
     public function __construct(ConfigService $configService, InstanceService $instanceService)
     {

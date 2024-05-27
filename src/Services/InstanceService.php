@@ -8,11 +8,12 @@ use Exewen\Http\HttpClient;
 
 class InstanceService
 {
-    private HttpClient $httpClient;
-    private string $driver;
-    private string $nacosInstanceUrl = '/nacos/v1/ns/instance';
-    private string $nacosInstanceListUrl = '/nacos/v1/ns/instance/list';
-    private string $nacosInstanceBeatUrl = '/nacos/v1/ns/instance/beat';
+//    private HttpClient $httpClient;
+    private $httpClient;
+    private $driver;
+    private $nacosInstanceUrl = '/nacos/v1/ns/instance';
+    private $nacosInstanceListUrl = '/nacos/v1/ns/instance/list';
+    private $nacosInstanceBeatUrl = '/nacos/v1/ns/instance/beat';
 
     public function __construct(HttpClientInterface $httpClient, ConfigInterface $config)
     {
