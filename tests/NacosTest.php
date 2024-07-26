@@ -3,17 +3,11 @@ declare(strict_types=1);
 
 namespace ExewenTest\Nacos;
 
-use Exewen\Di\Container;
-use Exewen\Http\HttpProvider;
-use Exewen\Logger\LoggerProvider;
-use Exewen\Nacos\Contract\NacosInterface;
-use Exewen\Nacos\NacosProvider;
+use Exewen\Nacos\NacosFacade;
 use PHPUnit\Framework\TestCase;
 
 class NacosTest extends TestCase
 {
-//    private Container $app;
-    private $app;
     private $serviceName = 'pms-user';
     private $dataId = 'pms-user.env';
     private $group = 'DEFAULT_GROUP';
@@ -24,15 +18,6 @@ class NacosTest extends TestCase
         parent::__construct();
         !defined('BASE_PATH_PKG') && define('BASE_PATH_PKG', dirname(__DIR__, 1));
         \Exewen\Utils\FileUtil::setSnapshotPath(dirname(__DIR__) . "/config/nacos/env");
-
-        $app = new Container();
-        // 服务注册
-        $app->setProviders([
-            LoggerProvider::class,
-            HttpProvider::class,
-            NacosProvider::class,
-        ]);
-        $this->app = $app;
     }
 
     /**
@@ -41,9 +26,7 @@ class NacosTest extends TestCase
      */
     public function testGetConfig()
     {
-        /** @var NacosInterface $nacos */
-        $nacos = $this->app->get(NacosInterface::class);
-        $config = $nacos->getConfig($this->namespaceId, $this->dataId, $this->group);
+        $config = NacosFacade::getConfig($this->namespaceId, $this->dataId, $this->group);
         $this->assertNotEmpty($config);
     }
 
@@ -53,9 +36,7 @@ class NacosTest extends TestCase
      */
     public function testSaveConfig()
     {
-        /** @var NacosInterface $nacos */
-        $nacos = $this->app->get(NacosInterface::class);
-        $config = $nacos->saveConfig($this->namespaceId, $this->dataId, $this->group);
+        $config = NacosFacade::saveConfig($this->namespaceId, $this->dataId, $this->group);
         $this->assertNotEmpty($config);
     }
 
@@ -66,7 +47,7 @@ class NacosTest extends TestCase
     public function testGetEnv()
     {
         $tempPath = \Exewen\Utils\FileUtil::getSnapshotFile($this->namespaceId, $this->dataId, $this->group);
-        $envPath = substr($tempPath, strlen(BASE_PATH_PKG) + 1);
+        $envPath  = substr($tempPath, strlen(BASE_PATH_PKG) + 1);
         !is_file($tempPath) && $envPath = '.env';
         $this->assertTrue($envPath !== '.env');
     }
@@ -78,11 +59,9 @@ class NacosTest extends TestCase
      */
     public function testSetInstance()
     {
-        /** @var NacosInterface $nacos */
-        $nacos = $this->app->get(NacosInterface::class);
-        $ip = '10.0.2.143';
-        $port = 8081;
-        $result = $nacos->setInstance($this->namespaceId, $this->serviceName, $this->group, $ip, $port);
+        $ip     = '10.0.2.143';
+        $port   = 8081;
+        $result = NacosFacade::setInstance($this->namespaceId, $this->serviceName, $this->group, $ip, $port);
         $this->assertTrue($result);
     }
 
@@ -92,11 +71,9 @@ class NacosTest extends TestCase
      */
     public function testSetInstanceBeat()
     {
-        /** @var NacosInterface $nacos */
-        $nacos = $this->app->get(NacosInterface::class);
-        $ip = '10.0.2.143';
-        $port = 8081;
-        $result = $nacos->setInstanceBeat($this->namespaceId, $this->serviceName, $this->group, $ip, $port);
+        $ip     = '10.0.2.143';
+        $port   = 8081;
+        $result = NacosFacade::setInstanceBeat($this->namespaceId, $this->serviceName, $this->group, $ip, $port);
         $this->assertTrue($result);
     }
 
@@ -106,9 +83,7 @@ class NacosTest extends TestCase
      */
     public function testGetInstance()
     {
-        /** @var NacosInterface $nacos */
-        $nacos = $this->app->get(NacosInterface::class);
-        $result = $nacos->getInstance($this->namespaceId, $this->serviceName, $this->group, true);
+        $result = NacosFacade::getInstance($this->namespaceId, $this->serviceName, $this->group, true);
         $this->assertNotEmpty($result['hosts'] ?? []);
     }
 

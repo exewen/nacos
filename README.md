@@ -1,7 +1,3 @@
-## 安装组件
-```sh
-composer require exewen/nacos
-```
 ## 复制配置
 ```sh
 cp -rf ./publish/exewen /your_project/config
@@ -14,49 +10,8 @@ cp -rf ./publish/exewen /your_project/config
 ``` 
 ## nacos
 ```php
-# 初始化DI
-$app = new Container();
-# 服务注册
-$app->setProviders([LoggerProvider::class,HttpProvider::class,NacosProvider::class]);
-$this->app = $app;
+use Exewen\Nacos\NacosFacade;
 
-# 获取配置文件
-/** @var NacosInterface $nacos */
-$nacos = $this->app->get(NacosInterface::class);
-$config = $nacos->getConfig($this->namespaceId, $this->dataId, $this->group);
-
-# 获取并保存配置文件
-/** @var NacosInterface $nacos */
-$nacos = $this->app->get(NacosInterface::class);
-$config = $nacos->saveConfig($this->namespaceId, $this->dataId, $this->group);
-
-# 读取本地配置文件
-$configPath = \Exewen\Utils\FileUtil::getSnapshotFile($this->namespaceId, $this->dataId, $this->group);
-
-# 注册实例
-/** @var NacosInterface $nacos */
-$nacos = $this->app->get(NacosInterface::class);
-$ip = '10.0.2.143';
-$port = 8081;
-$result = $nacos->setInstance($this->namespaceId, $this->serviceName, $this->group, $ip, $port);
-
-# 发送心跳
-/** @var NacosInterface $nacos */
-$nacos = $this->app->get(NacosInterface::class);
-$ip = '10.0.2.143';
-$port = 8081;
-$result = $nacos->setInstanceBeat($this->namespaceId, $this->serviceName, $this->group, $ip, $port);
-
-# 获取实例列表
-/** @var NacosInterface $nacos */
-$nacos = $this->app->get(NacosInterface::class);
-$result = $nacos->getInstance($this->namespaceId, $this->serviceName, $this->group, true);
-```
-## 使用 facades
-```sh
-composer require exewen/facades
-```
-```php
 # 获取配置文件
 NacosFacade::getConfig($this->namespaceId, $this->dataId, $this->group);
 
