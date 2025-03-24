@@ -16,7 +16,7 @@
     ],
     "require": {
         "php": ">=7.3",
-        "exewen/facades": "^1",
+        "exewen/facades": "^2",
         "ext-json": "*"
     },
     "require-dev": {
