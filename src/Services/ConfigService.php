@@ -29,11 +29,12 @@ class ConfigService
      */
     public function getConfig(string $namespaceId, string $dataId, string $group): string
     {
-        return $this->httpClient->get($this->driver, $this->nacosConfigUrl, [
+        $response = $this->httpClient->get($this->driver, $this->nacosConfigUrl, [
             'dataId' => $dataId,
             'group' => $group,
             'tenant' => $namespaceId,
         ]);
+        return $response->getBody()->getContents();
     }
 
     /**

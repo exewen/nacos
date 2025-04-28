@@ -31,12 +31,13 @@ class InstanceService
      */
     public function getInstance(string $namespaceId, string $serviceName, string $group, bool $healthyOnly)
     {
-        $result = $this->httpClient->get($this->driver, $this->nacosInstanceListUrl, [
+        $response = $this->httpClient->get($this->driver, $this->nacosInstanceListUrl, [
             'serviceName' => $serviceName,
             'groupName' => $group,
             'namespaceId' => $namespaceId,
             'healthyOnly' => $healthyOnly,
         ]);
+        $result = $response->getBody()->getContents();
         return json_decode($result, true);
     }
 
@@ -52,7 +53,7 @@ class InstanceService
      */
     public function setInstance(string $namespaceId, string $serviceName, string $group, string $ip, int $port, string $ver): bool
     {
-        $result = $this->httpClient->post($this->driver, $this->nacosInstanceUrl, [
+        $response = $this->httpClient->post($this->driver, $this->nacosInstanceUrl, [
             'namespaceId' => $namespaceId,
             'serviceName' => $serviceName,
             'groupName' => $group,
@@ -62,6 +63,7 @@ class InstanceService
                 'ver' => $ver
             ], JSON_UNESCAPED_UNICODE),
         ]);
+        $result = $response->getBody()->getContents();
         return $result == "ok";
     }
 
@@ -81,7 +83,7 @@ class InstanceService
         $beatServiceName = implode('@@', [$group, $serviceName]);
         $instanceId = implode('#', [$ip, $port, $cluster, $beatServiceName]);
 
-        $result = $this->httpClient->put($this->driver, $this->nacosInstanceBeatUrl, [
+        $response = $this->httpClient->put($this->driver, $this->nacosInstanceBeatUrl, [
             'namespaceId' => $namespaceId,
             'serviceName' => $serviceName,
             'groupName' => $group,
@@ -97,6 +99,7 @@ class InstanceService
                 'instanceId' => $instanceId,
             ], JSON_UNESCAPED_UNICODE),
         ]);
+        $result = $response->getBody()->getContents();
         $data = json_decode($result);
         if (isset($data->code) && $data->code == 10200) {
             return true;
